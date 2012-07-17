@@ -19,37 +19,39 @@ window.app = (function(){
 		init: function() {
 			var canvas, context, displayObjects, i, len;
 
+			// todo: move to stage
 			canvas = document.getElementById("theCanvas");
 			context = canvas.getContext("2d");
 
 			setupCanvasStyles(canvas, document);
 
-			testSquare(context);
+			var stage = new DisplayObjectContainer(context, 0, 0);
+			// end todo
 
-			displayObjects = [];// TODO: Move display objects to sprite
-
-			var sprite = new Sprite(context, 200, 200);
+			var sprite = new Sprite(context, 10, 10, function(context){
+				context.drawSquare(0, 0, 100, "#FFF", "#FF0000");
+			});
 			sprite.onclick = function(e) {
+				e.source.x *= 2;
 				console.log("Sprite 1 was clicked : " + e.source.x + ", " + e.source.y);
 			};
-			displayObjects.push(sprite);
+			stage.addChild(sprite);
 
-			var sprite2 = new Sprite(context, 400, 400);
+			var sprite2 = new Sprite(context, 120, 10, function(context) {
+				context.drawSquare(0, 0, 100, "#FFF", "#00FF00");
+				context.drawSquare(10, 10, 20, "#333", "#00FF00");
+				context.drawSquare(20, 20, 20, "#333", "#00FF00");
+				context.drawSquare(30, 30, 20, "#333", "#00FF00");
+			});
 			sprite2.onclick = function(e) {
 				console.log("Sprite 2 was clicked : " + e.source.x + ", " + e.source.y);
 			};
-			displayObjects.push(sprite2); 
+			stage.addChild(sprite2); 
 
+			stage.draw(); // todo: move to stage object
 
-			for(i = 0, len = displayObjects.length; i < len; i++) {
-				displayObjects[i].draw();
-			}
-
-			// notify observers that click event occured
-			canvas.onclick = function(e) {
-				for(i = 0, len = displayObjects.length; i < len; i++) {
-					displayObjects[i].notifyClick(e);
-				}
+			canvas.onclick = function(e) { // todo move to stage object
+				stage.notifyClick(e);
 			}
 		}
 
