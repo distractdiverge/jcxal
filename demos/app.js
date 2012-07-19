@@ -17,42 +17,40 @@ window.app = (function(){
 
 	return {
 		init: function() {
-			var canvas, context, displayObjects, i, len;
+			var canvas, context, stage;
 
-			// todo: move to stage
 			canvas = document.getElementById("theCanvas");
-			context = canvas.getContext("2d");
 
+			context = canvas.getContext("2d"); // todo only reference context in stage
 			setupCanvasStyles(canvas, document);
+			stage = new Stage(canvas);
 
-			var stage = new DisplayObjectContainer(context, 0, 0);
-			// end todo
-
-			var sprite = new Sprite(context, 10, 10, function(context){
+			var sprite = new Sprite(context/* TODO remove param, set in stage*/, 10, 10, function(context) {
 				context.drawSquare(0, 0, 100, "#FFF", "#FF0000");
+			},
+			function(x,y){
+				return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);
 			});
 			sprite.onclick = function(e) {
-				e.source.x *= 2;
 				console.log("Sprite 1 was clicked : " + e.source.x + ", " + e.source.y);
 			};
 			stage.addChild(sprite);
 
-			var sprite2 = new Sprite(context, 120, 10, function(context) {
+			var sprite2 = new Sprite(context /* TODO remove param, set in stage*/, 120, 10, function(context) {
 				context.drawSquare(0, 0, 100, "#FFF", "#00FF00");
 				context.drawSquare(10, 10, 20, "#333", "#00FF00");
 				context.drawSquare(20, 20, 20, "#333", "#00FF00");
 				context.drawSquare(30, 30, 20, "#333", "#00FF00");
+			},
+			function(x,y){
+				return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);
 			});
 			sprite2.onclick = function(e) {
 				console.log("Sprite 2 was clicked : " + e.source.x + ", " + e.source.y);
 			};
 			stage.addChild(sprite2); 
 
-			stage.draw(); // todo: move to stage object
-
-			canvas.onclick = function(e) { // todo move to stage object
-				stage.notifyClick(e);
-			}
+			stage.draw();
 		}
 
 	};

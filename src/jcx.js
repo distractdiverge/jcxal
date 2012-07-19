@@ -2,6 +2,10 @@
 
 	"use strict";
 
+	//
+	// using: http://dev.w3.org/html5/2dcontext/ specification for 2d context
+	//
+	
  	//define([],function(){
 
  		// a wrapper for normal html5 canvas context to allow relative coordinate space

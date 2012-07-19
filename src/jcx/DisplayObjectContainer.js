@@ -21,7 +21,7 @@
 		DisplayObject.call(this, context, x, y);
 	}
 
-	DisplayObjectContainer.prototype = new DisplayObject();	
+	DisplayObjectContainer.prototype = new DisplayObject(null, 0, 0);	
 
 	DisplayObjectContainer.prototype.addChild = function (item) {
 		if( !(item instanceof DisplayObject) ) {
@@ -57,7 +57,7 @@
 		if( this._isInBounds(evnt.x, evnt.y) ) {
 		
 			// delegate to children first
-			for( i = 0, len = this.children.length; i < len; i++ ) {
+			for( i = 0, len = this._children.length; i < len; i++ ) {
 				this._children[i].notifyClick(evnt);
 			}
 

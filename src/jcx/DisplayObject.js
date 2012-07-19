@@ -8,6 +8,14 @@
 	function DisplayObject(context, x, y) {
 		var _x, _y;
 
+		if( typeof(x) != "number" ) {
+			throw new Error("x must be a number");
+		}
+
+		if( typeof(y) != "number" ) {
+			throw new Error("y must be a number");
+		}
+
 		_x = x;
 		_y = y;
 
@@ -53,7 +61,7 @@
 			// perform drawing logic
 		},
 		notifyClick: function(e) {
-			if( _isInBounds(e.x, e.y) ) {
+			if( this._isInBounds(e.x, e.y) ) {
 				this.onclick(new JCXEvent("click", this));
 			}
 		},
