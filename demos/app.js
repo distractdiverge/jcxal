@@ -21,11 +21,10 @@ window.app = (function(){
 
 			canvas = document.getElementById("theCanvas");
 
-			context = canvas.getContext("2d"); // todo only reference context in stage
 			setupCanvasStyles(canvas, document);
 			stage = new Stage(canvas);
 
-			var sprite = new Sprite(context/* TODO remove param, set in stage*/, 10, 10, function(context) {
+			var sprite = new Sprite(10, 10, function(context) {
 				context.drawSquare(0, 0, 100, "#FFF", "#FF0000");
 			},
 			function(x,y){
@@ -36,7 +35,7 @@ window.app = (function(){
 			};
 			stage.addChild(sprite);
 
-			var sprite2 = new Sprite(context /* TODO remove param, set in stage*/, 120, 10, function(context) {
+			var sprite2 = new Sprite(120, 10, function(context) {
 				context.drawSquare(0, 0, 100, "#FFF", "#00FF00");
 				context.drawSquare(10, 10, 20, "#333", "#00FF00");
 				context.drawSquare(20, 20, 20, "#333", "#00FF00");

@@ -5,7 +5,7 @@
 	// using jcx
 	// using jcx/JCXEvent
 
-	function Sprite(context, x, y, renderer, isInBoundsTester) {
+	function Sprite(x, y, renderer, isInBoundsTester) {
 
 		if( typeof(renderer) !== "function" ) {
 			throw new Error("renderer must be a function");
@@ -32,10 +32,10 @@
 		});
 
 
-		DisplayObject.call(this, context, x, y);
+		DisplayObject.call(this, x, y);
 	}
 
-	Sprite.prototype = new DisplayObject(null, 0, 0);
+	Sprite.prototype = new DisplayObject(0, 0);
 	
 	Sprite.prototype._isInBounds = function(x, y) {
 		return this._isInBoundsTester.call(this, x, y);
@@ -44,7 +44,7 @@
 	//@override
 	Sprite.prototype.draw = function() {
 		DisplayObject.prototype.draw.call(this);
-		this._renderer.call(this, this.jcx);
+		this._renderer(this.jcx);
 	};
 	
 	window.Sprite = Sprite;

@@ -5,7 +5,7 @@
 	// using jcx
 	// using jcx/JCXEvent
 
-	function DisplayObject(context, x, y) {
+	function DisplayObject(x, y) {
 		var _x, _y;
 
 		if( typeof(x) != "number" ) {
@@ -22,8 +22,8 @@
 		Object.defineProperties(this,
 		{
 			jcx: {
-				value: new JCX(context, x, y),
-				writable: false,
+				value: null,
+				writable: true,
 				configurable: false,
 				enumerable: false
 			},

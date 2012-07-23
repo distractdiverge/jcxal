@@ -5,7 +5,7 @@
 	// using jcx
 	// using jcx/JCXEvent
 
-	function DisplayObjectContainer(context, x, y) {
+	function DisplayObjectContainer(x, y) {
 		// TODO inherit parent
 
 		Object.defineProperties(this, 
@@ -15,20 +15,45 @@
 				writable: true,
 				configurable: false,
 				enumerable: false
-			}
+			},
+            parentContainer: {
+                value:null,
+                writable: true,
+                configurable:false,
+                enumerable:false
+            },
+            context:{
+                value:null,
+                writable:true,
+                configurable:false,
+                enumerable:false
+            },
+            getContext: {
+                value: function(){
+                    if (!this.context){
+                        return this.parentContainer.getContext();
+                    }else{
+                        return this.context;
+                    }
+                },
+                writable:false,
+                configurable:false,
+                enumerable:false
+            }
 		});
 
-		DisplayObject.call(this, context, x, y);
+		DisplayObject.call(this, x, y);
 	}
 
-	DisplayObjectContainer.prototype = new DisplayObject(null, 0, 0);	
+	DisplayObjectContainer.prototype = new DisplayObject(0, 0);	
 
 	DisplayObjectContainer.prototype.addChild = function (item) {
 		if( !(item instanceof DisplayObject) ) {
 			throw new Error("Cannot add non DisplayObject");
 		}
-
+        item.parentContainer = this;
 		this._children.push(item);
+        item.jcx = new JCX(this.getContext(), item.x, item.y);
 	};
 	DisplayObjectContainer.prototype.removeItemAt = function(index){
 		if( index < 0 || index >= this.children.length ) {
