@@ -1,7 +1,5 @@
 // A canvas wrapper for object drawing
-(function(){
-
-	// using jcx.js
+define(['jcx', 'jcx/DisplayObjectContainer'], function(JCX, DisplayObjectContainer){
 
 	function Stage(canvas) {
 
@@ -11,7 +9,7 @@
 		canvas.style.width = canvas.width;
 		canvas.style.height = canvas.height;
 
-        this.context = canvas.getContext("2d");	
+        this.context = canvas.getContext("2d");
 
         this.jcx = new JCX(this._context,0,0);
 
@@ -22,12 +20,11 @@
 		};
 
 		// immediately draw the canvas
-		DisplayObjectContainer.prototype.draw.call(this); 
+		DisplayObjectContainer.prototype.draw.call(this);
 	}
 	
 	Stage.prototype = new DisplayObjectContainer(0, 0);
 
 	Stage.prototype._isInBounds = function(x, y) { return true; };
-
-	window.Stage = Stage;
-}());
+    return Stage;
+});

@@ -1,4 +1,4 @@
-(function(){
+define(['jcx/DisplayObject', 'jcx'], function(DisplayObject, JCX){
 
 	"use strict";
 
@@ -90,5 +90,5 @@
 		}
 	};
 
-	window.DisplayObjectContainer = DisplayObjectContainer;
-}());
+    return DisplayObjectContainer;
+});

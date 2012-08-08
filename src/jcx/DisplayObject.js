@@ -1,11 +1,9 @@
-(function(){
+define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEvent){
 
     "use strict";
 
     // using jcx
-    // using jcx/JCXEvent
-    // using jcx/EventDispatcher
-
+    
     function DisplayObject(x, y) {
         var _x, _y,
             _scaleX, _scaleY,
@@ -152,7 +150,6 @@
                 },
                 configurable: false,
                 enumerable: true
-
             },
             scaleY: {
                 get: function() { return _scaleY; },
@@ -203,6 +200,8 @@
                 enumerable: true
             }
         });
+
+        EventDispatcher.call(this);
     }
 
     DisplayObject.prototype = new EventDispatcher();
@@ -248,7 +247,5 @@
     DisplayObject.prototype.localToGlobal = function(point){
 
     };
-
-
-    window.DisplayObject = DisplayObject;
-}());
+    return DisplayObject;
+});

@@ -1,4 +1,4 @@
-(function(){
+define(['jcx/DisplayObject'], function(DisplayObject){
 
 	"use strict";
 
@@ -47,5 +47,5 @@
 		this._renderer(this.jcx);
 	};
 	
-	window.Sprite = Sprite;
-}());
+    return Sprite;
+});

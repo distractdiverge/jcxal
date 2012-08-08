@@ -1,4 +1,4 @@
-(function(){
+define(function(){
 	
 	"use strict";
 
@@ -100,6 +100,5 @@
     JCXEvent.USER_IDLE = "userIdle";
     JCXEvent.USER_PRESENT = "userPresent";
 
-	window.JCXEvent = JCXEvent;
-
-}());
+    return JCXEvent;
+});

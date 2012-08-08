@@ -1,4 +1,4 @@
-(function(){
+define(function(){
     "use strict";
 
     //target is an IEventDispatcher
@@ -39,4 +39,5 @@
 
         }
     };
-}());
+    return EventDispatcher;
+});
