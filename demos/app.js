@@ -36,10 +36,10 @@ window.app = (function(){
 			stage.addChild(sprite);
 
 			var sprite2 = new Sprite(120, 10, function(context) {
-				context.drawSquare(0, 0, 100, "#FFF", "#00FF00");
-				context.drawSquare(10, 10, 20, "#333", "#00FF00");
+				context.drawSquare(0, 0, 100, "#FFF", "#FFFF00");
+				context.drawSquare(10, 10, 20, "#333", "#FF0000");
 				context.drawSquare(20, 20, 20, "#333", "#00FF00");
-				context.drawSquare(30, 30, 20, "#333", "#00FF00");
+				context.drawSquare(30, 30, 20, "#333", "#0000FF");
 			},
 			function(x,y){
 				return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);

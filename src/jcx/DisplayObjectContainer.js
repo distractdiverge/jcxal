@@ -6,9 +6,8 @@
 	// using jcx/JCXEvent
 
 	function DisplayObjectContainer(x, y) {
-		// TODO inherit parent
 
-		Object.defineProperties(this, 
+		Object.defineProperties(this,
 		{
 			_children: {
 				value: [],
@@ -45,7 +44,7 @@
 		DisplayObject.call(this, x, y);
 	}
 
-	DisplayObjectContainer.prototype = new DisplayObject(0, 0);	
+	DisplayObjectContainer.prototype = new DisplayObject(0, 0);
 
 	DisplayObjectContainer.prototype.addChild = function (item) {
 		if( !(item instanceof DisplayObject) ) {
@@ -71,7 +70,7 @@
 
 		DisplayObject.prototype.draw.call(this);
 		
-		for(i = 0, len = this._children.length; i < len; i++ ) {
+		for(i = 0, len = this._children.length; i < len; i+=1 ) {
 			// coordinate space is relative because we called draw of container first
 			this._children[i].draw();
 		}
@@ -82,7 +81,7 @@
 		if( this._isInBounds(evnt.x, evnt.y) ) {
 		
 			// delegate to children first
-			for( i = 0, len = this._children.length; i < len; i++ ) {
+			for( i = 0, len = this._children.length; i < len; i+=1 ) {
 				this._children[i].notifyClick(evnt);
 			}
 
