@@ -29,7 +29,7 @@ define(['jcx/Stage', 'jcx/sprite'],function(Stage, Sprite){
             return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);
         });
         sprite.onclick = function(e) {
-            console.log("Sprite 1 was clicked : " + e.source.x + ", " + e.source.y);
+            console.log("Sprite 1 was clicked : " + e.target.x + ", " + e.target.y);
         };
         stage.addChild(sprite);
 
@@ -43,7 +43,7 @@ define(['jcx/Stage', 'jcx/sprite'],function(Stage, Sprite){
             return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);
         });
         sprite2.onclick = function(e) {
-            console.log("Sprite 2 was clicked : " + e.source.x + ", " + e.source.y);
+            console.log("Sprite 2 was clicked : " + e.target.x + ", " + e.target.y);
         };
         stage.addChild(sprite2);
 

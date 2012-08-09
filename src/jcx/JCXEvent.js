@@ -1,17 +1,19 @@
 define(function(){
-	
-	"use strict";
+    
+    "use strict";
 
-	function JCXEvent(type, bubbles, cancelable) {
+    function JCXEvent(type, bubbles, cancelable) {
         if(bubbles === null || bubbles === undefined){
             bubbles = false;
         }
         if(cancelable === null || cancelable === undefined){
             cancelable = false;
         }
+        var _targetLocked = false;
+        var _target;
 
-		Object.defineProperties(this,
-		{
+        Object.defineProperties(this,
+        {
             bubbles: {
                 value:bubbles,
                 writable:false,
@@ -37,8 +39,13 @@ define(function(){
                 enumerable:false
             },
             target: {
-                value: null,
-                writable: false,
+                get: function(){ return _target; },
+                set: function(value){
+                    if(_target!==null && !_targetLocked){
+                        _target = value;
+                        _targetLocked = true;
+                    }
+                },
                 configurable: false,
                 enumerable: false
             },
@@ -48,8 +55,8 @@ define(function(){
                 configurable: false,
                 enumerable: false
             }
-		});
-	}
+        });
+    }
 
     JCXEvent.ACTIVATE = "activate";
     JCXEvent.ADDED = "added";

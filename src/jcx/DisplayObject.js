@@ -10,7 +10,7 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
             _stage, _rotation,
             _opaqueBackground,
             _mask, _blendShader,
-            _visible;
+            _visible, _onclick;
 
         if( typeof(x) !== "number" ) {
             throw new Error("x must be a number");
@@ -198,6 +198,16 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
                 },
                 configurable: false,
                 enumerable: true
+            },
+            onclick: {
+                get: function(){ return _onclick; },
+                set: function(value){
+                    this.removeEventListener("click");
+                    _onclick=value;
+                    this.addEventListener("click", _onclick);
+                },
+                configurable:false,
+                enumerable:false
             }
         });
 
@@ -217,11 +227,8 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
     };
     DisplayObject.prototype.notifyClick = function(e) {
         if( this._isInBounds(e.x, e.y) ) {
-            this.onclick(new JCXEvent("click", this));
+            this.dispatchEvent(new JCXEvent("click"));
         }
-    };
-    DisplayObject.prototype.onclick = function(e) {
-        // do nothing
     };
 
     //PUBLIC METHODS

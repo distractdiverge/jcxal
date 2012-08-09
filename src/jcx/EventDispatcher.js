@@ -7,6 +7,8 @@ define(function(){
         if(target){
             //aggregate instance
         }
+        
+        this._eventListeners = {};
     }
 
     EventDispatcher.prototype = {
@@ -19,10 +21,14 @@ define(function(){
             if(!useCapture){ useCapture = false; }
             if(!priority){ priority = 0; }
             if(!useWeakReference){ useWeakReference = false; }
+            this._eventListeners[type] = listener;
         },
-        //event:Event
-        dispatchEvent:function(event){
-
+        //event:JCXEvent
+        dispatchEvent:function(jcxEvent){
+            jcxEvent.target = this;
+            if(this._eventListeners[jcxEvent.type]!==null && this._eventListeners[jcxEvent.type]!==undefined){
+                this._eventListeners[jcxEvent.type](jcxEvent);
+            }
         },
         //type:string
         hasEventListener:function(type){
@@ -33,11 +39,13 @@ define(function(){
         //useCapture:boolean
         removeEventListener:function(type, listener, useCapture){
             if(!useCapture){ useCapture = false; }
+            delete this._eventListeners[type];
         },
         //type:string
         willTrigger:function(type){
 
-        }
+        },
+        _eventListeners:{}
     };
     return EventDispatcher;
 });
