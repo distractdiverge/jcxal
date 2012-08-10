@@ -5,7 +5,6 @@ define(function() {
     //
     // using: http://dev.w3.org/html5/2dcontext/ specification for 2d context
     //
-    //require(['jcx/Stage']);
     
          // a wrapper for normal html5 canvas context to allow relative coordinate space
          function JCX(context, x, y) {

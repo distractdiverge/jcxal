@@ -1,10 +1,4 @@
-define(['jcx/Stage', 'jcx/sprite'],function(Stage, Sprite){
-	function testSquare(context) {
-		jcx.drawSquare(context, 10, 10, 100, "#FFF");
-		jcx.drawSquare(context, 120, 10, 100, "#FFF","#EEE");
-		jcx.drawSquare(context, 230, 10, 100, "#FF3333","#FFCCCC");
-	}
-
+define(['jcx', 'jcx/Stage', 'jcx/sprite'],function(JCX, Stage, Sprite){
 	function setupCanvasStyles(canvas, document) {
 		canvas.width = document.width;
 		canvas.height = document.height;
@@ -22,7 +16,7 @@ define(['jcx/Stage', 'jcx/sprite'],function(Stage, Sprite){
         setupCanvasStyles(canvas, document);
         stage = new Stage(canvas);
 
-        var sprite = new Sprite(10, 10, function(context) {
+        var sprite = new Sprite(10,10,function(context) {
             context.drawSquare(0, 0, 100, "#FFF", "#FF0000");
         },
         function(x,y){
@@ -35,7 +29,6 @@ define(['jcx/Stage', 'jcx/sprite'],function(Stage, Sprite){
 
         var sprite2 = new Sprite(120, 10, function(context) {
             context.drawSquare(0, 0, 100, "#FFF", "#FFFF00");
-            context.drawSquare(10, 10, 20, "#333", "#FF0000");
             context.drawSquare(20, 20, 20, "#333", "#00FF00");
             context.drawSquare(30, 30, 20, "#333", "#0000FF");
         },
@@ -45,7 +38,22 @@ define(['jcx/Stage', 'jcx/sprite'],function(Stage, Sprite){
         sprite2.onclick = function(e) {
             console.log("Sprite 2 was clicked : " + e.target.x + ", " + e.target.y);
         };
+
+        var sprite3 = new Sprite(10, 10, function(context){
+            context.drawCircle(10,10,10, "#333","#00FFFF");
+        },
+        function(x,y){
+            var a_squared = Math.pow(this.jcx.xOffset + this.x - x, 2);
+            var b_squared = Math.pow(this.jcx.yOffset + this.y - y, 2);
+            var c_squared = a_squared + b_squared;
+            return c_squared < 100;
+        });
+        sprite3.onclick = function(e){
+            console.log("Sprite 3 was clicked : " + e.target.x + ", " + e.target.y);
+        };
         stage.addChild(sprite2);
+
+        sprite2.addChild(sprite3);
 
         stage.draw();
 	}

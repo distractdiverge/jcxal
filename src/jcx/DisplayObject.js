@@ -1,10 +1,10 @@
-define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEvent){
+define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, MouseEvent){
 
     "use strict";
 
     // using jcx
     
-    function DisplayObject(x, y) {
+    function DisplayObject() {
         var _x, _y,
             _scaleX, _scaleY,
             _stage, _rotation,
@@ -12,16 +12,8 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
             _mask, _blendShader,
             _visible, _onclick;
 
-        if( typeof(x) !== "number" ) {
-            throw new Error("x must be a number");
-        }
-
-        if( typeof(y) !== "number" ) {
-            throw new Error("y must be a number");
-        }
-
-        _x = x;
-        _y = y;
+        _x = 0;
+        _y = 0;
         _scaleX = 1;
         _scaleY = 1;
         _rotation = 0;
@@ -185,7 +177,7 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
                 get: function() { return _x; },
                 set: function(value) {
                     _x = value;
-                    this.draw();
+                    //this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -194,7 +186,7 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
                 get: function() { return _y; },
                 set: function(value) {
                     _y = value;
-                    this.draw();
+                    //this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -202,9 +194,9 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
             onclick: {
                 get: function(){ return _onclick; },
                 set: function(value){
-                    this.removeEventListener("click");
+                    this.removeEventListener(MouseEvent.CLICK);
                     _onclick=value;
-                    this.addEventListener("click", _onclick);
+                    this.addEventListener(MouseEvent.CLICK, _onclick);
                 },
                 configurable:false,
                 enumerable:false
@@ -227,7 +219,7 @@ define(['jcx/EventDispatcher', 'jcx/JCXEvent'], function(EventDispatcher, JCXEve
     };
     DisplayObject.prototype.notifyClick = function(e) {
         if( this._isInBounds(e.x, e.y) ) {
-            this.dispatchEvent(new JCXEvent("click"));
+            this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, null, null, e.x, e.y));
         }
     };
 

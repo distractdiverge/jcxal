@@ -1,4 +1,4 @@
-define(['jcx/DisplayObject'], function(DisplayObject){
+define(['jcx/DisplayObjectContainer'], function(DisplayObjectContainer){
 
 	"use strict";
 
@@ -31,11 +31,12 @@ define(['jcx/DisplayObject'], function(DisplayObject){
 			}
 		});
 
-
-		DisplayObject.call(this, x, y);
+		DisplayObjectContainer.call(this);
+        this.x = x;
+        this.y = y;
 	}
 
-	Sprite.prototype = new DisplayObject(0, 0);
+	Sprite.prototype = new DisplayObjectContainer(0, 0);
 	
 	Sprite.prototype._isInBounds = function(x, y) {
 		return this._isInBoundsTester.call(this, x, y);
@@ -43,8 +44,8 @@ define(['jcx/DisplayObject'], function(DisplayObject){
 
 	//@override
 	Sprite.prototype.draw = function() {
-		DisplayObject.prototype.draw.call(this);
 		this._renderer(this.jcx);
+		DisplayObjectContainer.prototype.draw.call(this);
 	};
 	
     return Sprite;
