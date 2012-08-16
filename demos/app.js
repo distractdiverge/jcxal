@@ -8,6 +8,12 @@ define(['jcx', 'jcx/Stage', 'jcx/sprite'],function(JCX, Stage, Sprite){
 		canvas.style.backgroundColor = "#333333";
 	}
 
+    function logSpriteClick(e){
+        var logString = "Sprite " + e.target.name + " clicked\n";
+        logString += "Mouse Location:\nx " + e.stageX + " y " + e.stageY;
+        console.log(logString);
+    }
+
     function init() {
         var canvas, context, stage;
 
@@ -22,9 +28,8 @@ define(['jcx', 'jcx/Stage', 'jcx/sprite'],function(JCX, Stage, Sprite){
         function(x,y){
             return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);
         });
-        sprite.onclick = function(e) {
-            console.log("Sprite 1 was clicked : " + e.target.x + ", " + e.target.y);
-        };
+        sprite.name = "lonely sprite";
+        sprite.onclick = logSpriteClick;
         stage.addChild(sprite);
 
         var sprite2 = new Sprite(120, 10, function(context) {
@@ -33,11 +38,10 @@ define(['jcx', 'jcx/Stage', 'jcx/sprite'],function(JCX, Stage, Sprite){
             context.drawSquare(30, 30, 20, "#333", "#0000FF");
         },
         function(x,y){
-            return (x >= this.x && x <= this.x+100) && (y >= this.y && y <= this.y+100);
+            return (x >= this.x && x <= this.x + 100) && (y >= this.y && y <= this.y + 100);
         });
-        sprite2.onclick = function(e) {
-            console.log("Sprite 2 was clicked : " + e.target.x + ", " + e.target.y);
-        };
+        sprite2.name = "nesting sprite";
+        sprite2.onclick = logSpriteClick;
 
         var sprite3 = new Sprite(10, 10, function(context){
             context.drawCircle(10,10,10, "#333","#00FFFF");
@@ -48,9 +52,8 @@ define(['jcx', 'jcx/Stage', 'jcx/sprite'],function(JCX, Stage, Sprite){
             var c_squared = a_squared + b_squared;
             return c_squared < 100;
         });
-        sprite3.onclick = function(e){
-            console.log("Sprite 3 was clicked : " + e.target.x + ", " + e.target.y);
-        };
+        sprite3.name = "nested sprite";
+        sprite3.onclick = logSpriteClick;
         stage.addChild(sprite2);
 
         sprite2.addChild(sprite3);

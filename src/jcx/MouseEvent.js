@@ -1,7 +1,7 @@
 define(["jcx/JCXEvent"],function(JCXEvent){
     "use strict";
 
-    function MouseEvent(type, bubbles, cancelable, localX, localY, relatedObject, ctrlKey, altKey, shiftKey, buttonDown, delta, commandKey, controlKey, clickCount){
+    function MouseEvent(type, bubbles, cancelable, stageX, stageY, relatedObject, ctrlKey, altKey, shiftKey, buttonDown, delta, commandKey, controlKey, clickCount){
         Object.defineProperties(this,
         {
             altKey:{
@@ -46,20 +46,14 @@ define(["jcx/JCXEvent"],function(JCXEvent){
                 configurable:false,
                 enumerable:false
             },
-            isRelatedObjectInaccessible:{
-                value:false,
-                writable:true,
-                configurable:false,
-                enumerable:false
-            },
             localX:{
-                value:localX,
+                value:null,
                 writable:true,
                 configurable:false,
                 enumerable:false
             },
             localY:{
-                value:localY,
+                value:null,
                 writable:true,
                 configurable:false,
                 enumerable:false
@@ -77,13 +71,13 @@ define(["jcx/JCXEvent"],function(JCXEvent){
                 enumerable:false
             },
             stageX:{
-                value:null,//TODO
+                value:stageX,
                 writable:false,
                 configurable:false,
                 enumerable:false
             },
             stageY:{
-                value:null,//TODO
+                value:stageY,
                 writable:false,
                 configurable:false,
                 enumerable:false

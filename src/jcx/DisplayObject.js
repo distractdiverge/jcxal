@@ -8,8 +8,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
         var _x, _y,
             _scaleX, _scaleY,
             _stage, _rotation,
-            _opaqueBackground,
-            _mask, _blendShader,
             _visible, _onclick;
 
         _x = 0;
@@ -17,8 +15,8 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
         _scaleX = 1;
         _scaleY = 1;
         _rotation = 0;
-        _opaqueBackground = null;
-        _blendShader = null;
+
+        var _stageLocked = false;
 
         Object.defineProperties(this,
         {
@@ -27,26 +25,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 writable: true,
                 configurable: false,
                 enumerable: false
-            },
-            alpha: {
-                value: 1.0,
-                writable: true,
-                configurable: false,
-                enumerable: true
-            },
-            blendMode:{
-                value:"",
-                writable: true,
-                configurable: false,
-                enumerable:true
-            },
-            blendShader: {
-                set: function(value){
-                    _blendShader = value;
-                    this.draw();
-                },
-                configurable: false,
-                enumerable: true
             },
             cacheAsBitmap: {
                 value: false,
@@ -60,30 +38,9 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 configurable: false,
                 enumerable: true
             },
-            filters: {
-                value: null,
-                writable: true,
-                configurable: false,
-                enumerable: true
-            },
             height: {
                 value: null,
                 writable: true,
-                configurable: false,
-                enumerable: true
-            },
-            loaderInfo: {
-                value: null,
-                writable: false,
-                configurable: false,
-                enumerable: false
-            },
-            mask: {
-                get: function() { return _mask; },
-                set: function(value){
-                    _mask = value;
-                    this.draw();
-                },
                 configurable: false,
                 enumerable: true
             },
@@ -104,27 +61,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 writable: true,
                 configurable: false,
                 enumerable: true
-            },
-            opaqueBackground: {
-                get: function() { return _opaqueBackground; },
-                set: function(value) {
-                    _opaqueBackground = value;
-                    this.draw();
-                },
-                configurable:false,
-                enumerable: true
-            },
-            parentDisplayObjectContainer: {
-                value: null,
-                writable:false,
-                configurable:false,
-                enumerable:false
-            },
-            root: {
-                value: null,
-                writable: false,
-                configurable: false,
-                enumerable: false
             },
             rotation: {
                 set: function(value) {
@@ -153,8 +89,13 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 enumerable: true
             },
             stage: {
-                value: null,
-                writable: false,
+                get: function() { return _stage; },
+                set: function(value){
+                    if(!_stageLocked){
+                        _stage = value;
+                    }
+                    _stageLocked = true;
+                },
                 configurable: false,
                 enumerable: false
             },
@@ -162,7 +103,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 get: function() { return _visible; },
                 set: function(value){
                     _visible = value;
-                    this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -177,7 +117,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 get: function() { return _x; },
                 set: function(value) {
                     _x = value;
-                    //this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -186,7 +125,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 get: function() { return _y; },
                 set: function(value) {
                     _y = value;
-                    //this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -208,18 +146,26 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
 
     DisplayObject.prototype = new EventDispatcher();
 
-    DisplayObject.prototype._isInBounds = function(x, y) {
-        
-        // test to see if point is inbounds
+    //Protected properties
+    Object.defineProperties(DisplayObject.prototype, {
+        parentContainer: {
+            value: null,
+            writable:false,
+            configurable:false,
+            enumerable:false
+        },
+    });
 
+    DisplayObject.prototype._isInBounds = function(x, y) {
+        // test to see if point is inbounds
         return false;
     };
     DisplayObject.prototype.draw = function() {
         // perform drawing logic
     };
     DisplayObject.prototype.notifyClick = function(e) {
-        if( this._isInBounds(e.x, e.y) ) {
-            this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, null, null, e.x, e.y));
+        if( this.hitTestPoint(e.stageX, e.stageY) ) {
+            this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, null, null, e.stageX, e.stageY));
         }
     };
 
@@ -235,16 +181,12 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
     DisplayObject.prototype.globalToLocal = function(point){
         
     };
-    //the 'obj' parameter should be another DisplayObject
-    DisplayObject.prototype.hitTestObject = function(obj){
-
-    };
     //the 'shapeFlag' argument defaults to false and determines whether to check pixels (true) or just the bounding box (false)
     DisplayObject.prototype.hitTestPoint = function(x, y, shapeFlag){
-        
+        return this._isInBounds(x, y);
     };
     DisplayObject.prototype.localToGlobal = function(point){
-
+        
     };
     return DisplayObject;
 });
