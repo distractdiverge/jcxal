@@ -2,13 +2,13 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
 
     "use strict";
 
-    // using jcx
-    
     function DisplayObject() {
         var _x, _y,
             _scaleX, _scaleY,
             _stage, _rotation,
-            _visible, _onclick;
+            _visible, _onclick,
+            _stageX, _stageY,
+            _context;
 
         _x = 0;
         _y = 0;
@@ -20,12 +20,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
 
         Object.defineProperties(this,
         {
-            jcx: {
-                value: null,
-                writable: true,
-                configurable: false,
-                enumerable: false
-            },
             cacheAsBitmap: {
                 value: false,
                 writable: true,
@@ -37,6 +31,19 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 writable: true,
                 configurable: false,
                 enumerable: true
+            },
+            context: {
+                get: function(){
+                    if (!_context){
+                        _context = this.parentContainer.context;
+                    }
+                    return _context;
+                },
+                set: function(value){
+                    _context = value;
+                },
+                configurable:false,
+                enumerable:false
             },
             height: {
                 value: null,
@@ -62,10 +69,31 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 configurable: false,
                 enumerable: true
             },
+            stageX: {
+                get: function(){
+                    if(_stageX == null || _stageX == undefined){
+                        _stageX = this.x + this.parentContainer.stageX;
+                    }
+                    return _stageX;
+                },
+                set: function(value){_stageX=value;},
+                configurable:true,
+                enumerable:true
+            },
+            stageY: {
+                get: function(){
+                    if(_stageY == null || _stageY == undefined){
+                        _stageY = this.y + this.parentContainer.stageY;
+                    }
+                    return _stageY;
+                },
+                set: function(value){_stageY=value;},
+                configurable:true,
+                enumerable:true
+            },
             rotation: {
                 set: function(value) {
                     _rotation = value;
-                    this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -74,7 +102,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 get: function() { return _scaleX; },
                 set: function(value) {
                     _scaleX = value;
-                    this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -83,7 +110,6 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 get: function() { return _scaleY; },
                 set: function(value){
                     _scaleY = value;
-                    this.draw();
                 },
                 configurable: false,
                 enumerable: true
@@ -157,8 +183,7 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
     });
 
     DisplayObject.prototype._isInBounds = function(x, y) {
-        // test to see if point is inbounds
-        return false;
+        return (x >= this.stageX && x <= this.stageX + this.width && y >= this.stageY && y <= this.stageY + this.height);
     };
     DisplayObject.prototype.draw = function() {
         // perform drawing logic

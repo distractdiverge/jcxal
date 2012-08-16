@@ -56,15 +56,27 @@ define(['jcx', 'jcx/DisplayObjectContainer', 'jcx/MouseEvent'], function(JCX, Di
                 configurable:false,
                 enumerable:true
             },
+            stageX: {
+                value:0,
+                writable:false,
+                configurable:false,
+                enumerable:false
+            },
+            stageY: {
+                value:0,
+                writable:false,
+                configurable:false,
+                enumerable:false
+            }
         });
 
         // ensure the width/height is correct
         canvas.style.width = canvas.width;
         canvas.style.height = canvas.height;
+        this.height = canvas.height;
+        this.width = canvas.width;
 
         this.context = canvas.getContext("2d");
-
-        this.jcx = new JCX(this._context,0,0);
 
         // setup click handler
         var that = this;

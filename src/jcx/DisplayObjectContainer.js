@@ -2,11 +2,8 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
 
     "use strict";
 
-    // using jcx
-    // using jcx/JCXEvent
-
     function DisplayObjectContainer() {
-        var _context=null, _mouseChildren=true, _tabChildren=true;
+        var _mouseChildren=true, _tabChildren=true;
 
         Object.defineProperties(this,
         {
@@ -42,19 +39,6 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
                 },
                 configurable:true,
                 enumerable:false
-            },
-            context: {
-                get: function(){
-                    if (!_context){
-                        _context = this.parentContainer.context;
-                    }
-                    return _context;
-                },
-                set: function(value){
-                    _context = value;
-                },
-                configurable:false,
-                enumerable:false
             }
         });
 
@@ -88,7 +72,6 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         }
         
         item.parentContainer = this;
-        item.jcx = new JCX(this.context, this.jcx.xOffset+item.x, this.jcx.yOffset+item.y);
 
         this._children.push(item);
         return item;
@@ -112,7 +95,8 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         }
 
         item.parentContainer = this;
-        item.jcx = new JCX(this.context, this.jcx.xOffset+item.x, this.jcx.yOffset+item.y);
+        item.stageX = this.stageX + item.x;
+        item.stageY = this.stageY + item.y;
 
         this._children.splice(index, 0, item);
         return item;
@@ -203,7 +187,7 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         //capture
 
         //propagation
-        this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).every(function(item, index){
+        this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
             var newEvent = new MouseEvent(MouseEvent.CLICK, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
             newEvent.target = item;
             item.notifyClick(newEvent);
