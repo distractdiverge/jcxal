@@ -1,4 +1,4 @@
-define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape'],function(Stage, Sprite, Shape){
+define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage, Sprite, Shape, StaticText){
 	function setupCanvasStyles(canvas, document) {
 		canvas.width = document.width;
 		canvas.height = document.height;
@@ -10,8 +10,8 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape'],function(Stage, Sprite, Shape){
 	}
 
     function logSpriteClick(e){
-        var logString = "Sprite " + e.target.name + " clicked\n";
-        logString += "Mouse Location:\nx " + e.stageX + " y " + e.stageY;
+        var logString = e.target.name + " clicked: x "+ e.target.stageX +" y " + e.target.stageY + "\n";
+        logString += "mouse location: x " + e.stageX + " y " + e.stageY;
         console.log(logString);
     }
 
@@ -27,6 +27,9 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape'],function(Stage, Sprite, Shape){
     }
     function renderSquare(context){
         context.drawSquare(this.stageX, this.stageY, this.width, "#333", this.color);
+    }
+    function renderText(context){
+        context.drawText(this.stageX, this.stageY, this.text, "#333", this.color);
     }
 
     function init() {
@@ -58,6 +61,14 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape'],function(Stage, Sprite, Shape){
 
         sprite.addChild(shape1);
         stage.addChild(sprite);
+
+        var staticText = new StaticText();
+        staticText.x = 10;
+        staticText.y = 10;
+        staticText.color = "#FFFFFF";
+        staticText.text = "Hello World!";
+        staticText.renderer = renderText;
+        sprite.addChild(staticText);
 
         var sprite2 = new Sprite();
         sprite2.x = 120;

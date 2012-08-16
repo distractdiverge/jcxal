@@ -40,11 +40,11 @@ define(['jcx/DisplayObject', 'jcx'], function(DisplayObject, JCX){
     Shape.prototype.draw = function(){
         this.renderer(this.jcx);
         DisplayObject.prototype.draw.call(this);
-    }
+    };
 
     //@override
     Shape.prototype._isInBounds = function(x, y){
         return this.isInBoundsTester(x, y);
-    }
+    };
     return Shape;
 });

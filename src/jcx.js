@@ -30,7 +30,6 @@ define(function() {
         drawSquare: function(x, y, size, color, fillColor) {
             this.drawRectangle(x, y, size, size, color, fillColor);
         },
-
         drawCircle: function(x, y, radius, color, fillColor) {
             
             if( fillColor ) {
@@ -41,8 +40,15 @@ define(function() {
 
             this._innerContext.strokeStyle = color;
             this._innerContext.stroke();
+        },
+        drawText: function(x, y, text, color, fillColor){
+            if(fillColor){
+                this._innerContext.fillStyle = fillColor;
+                this._innerContext.fillText(text, x, y);
+            }
+            this._innerContext.strokeStyle = color;
+            this._innerContext.stroke();
         }
-
     };
     return JCX;
 });
