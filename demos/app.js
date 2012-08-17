@@ -63,8 +63,8 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         stage.addChild(sprite);
 
         var staticText = new StaticText();
-        staticText.x = 10;
-        staticText.y = 10;
+        staticText.x = 5;
+        staticText.y = 20;
         staticText.color = "#FFFFFF";
         staticText.text = "Hello World!";
         staticText.renderer = renderText;
@@ -145,6 +145,5 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         stage.draw();
 	}
 
-    window.onload = init;
     return init;
 });

@@ -42,12 +42,14 @@ define(function() {
             this._innerContext.stroke();
         },
         drawText: function(x, y, text, color, fillColor){
+            //y is the bottom (baseline?) of the text by default
+            this._innerContext.font = "900 14px/2 Consolas";
             if(fillColor){
                 this._innerContext.fillStyle = fillColor;
                 this._innerContext.fillText(text, x, y);
             }
             this._innerContext.strokeStyle = color;
-            this._innerContext.stroke();
+            this._innerContext.strokeText(text,x,y);
         }
     };
     return JCX;

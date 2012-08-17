@@ -1,18 +1,8 @@
-define(['jcx/DisplayObject', 'jcx'], function(DisplayObject, JCX){
+define(['jcx/RenderableObject', 'jcx'], function(RenderableObject, JCX){
 
     function Shape(){
         var _jcx;
         Object.defineProperties(this,{
-            jcx: {
-                get: function(){
-                    if (_jcx == null || _jcx == undefined){
-                        _jcx = new JCX(this.context);
-                    }
-                    return _jcx;
-                },
-                configurable:false,
-                enumerable:true
-            },
             color : {
                 value:"#000",
                 writable:true,
@@ -32,14 +22,14 @@ define(['jcx/DisplayObject', 'jcx'], function(DisplayObject, JCX){
                 enumerable:false
             }
         });
-        DisplayObject.call(this);
+        RenderableObject.call(this);
     }
     
-    Shape.prototype = new DisplayObject();
+    Shape.prototype = new RenderableObject();
     //@override
     Shape.prototype.draw = function(){
         this.renderer(this.jcx);
-        DisplayObject.prototype.draw.call(this);
+        RenderableObject.prototype.draw.call(this);
     };
 
     //@override

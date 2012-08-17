@@ -1,19 +1,10 @@
-define(['jcx/DisplayObject', 'jcx'],function(DisplayObject, JCX){
+define(['jcx/RenderableObject', 'jcx'],function(RenderableObject, JCX){
     "use strict";
 
     function StaticText(){
         //need to do something about this - is duplicated in Shape
         var _jcx;
         Object.defineProperties(this,{
-            jcx: {
-                get: function(){
-                    if(_jcx == null || _jcx == undefined){
-                        _jcx = new JCX(this.context);
-                    }
-                    return _jcx;
-                }
-
-            },
             renderer:{
                 value: null,
                 writable:true,
@@ -28,13 +19,13 @@ define(['jcx/DisplayObject', 'jcx'],function(DisplayObject, JCX){
             }
         });
         
-        DisplayObject.call(this);
+        RenderableObject.call(this);
     }
 
-    StaticText.prototype = new DisplayObject();
+    StaticText.prototype = new RenderableObject();
     StaticText.prototype.draw = function(){
         this.renderer(this.jcx);
-        DisplayObject.prototype.draw.call(this);
+        RenderableObject.prototype.draw.call(this);
     };
 
     return StaticText;
