@@ -32,6 +32,7 @@ define(function() {
         },
         drawCircle: function(x, y, radius, color, fillColor) {
             
+            this._innerContext.beginPath();
             if( fillColor ) {
                 this._innerContext.fillStyle = fillColor;
                 this._innerContext.arc(x, y, radius, 0, 360);
@@ -40,6 +41,7 @@ define(function() {
 
             this._innerContext.strokeStyle = color;
             this._innerContext.stroke();
+            this._innerContext.closePath();
         },
         drawText: function(x, y, text, color, fillColor){
             //y is the bottom (baseline?) of the text by default
@@ -50,6 +52,9 @@ define(function() {
             }
             this._innerContext.strokeStyle = color;
             this._innerContext.strokeText(text,x,y);
+        },
+        clearRect: function(x, y, width, height){
+            this._innerContext.clearRect(x,y,width,height);
         }
     };
     return JCX;

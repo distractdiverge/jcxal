@@ -15,7 +15,13 @@ define(['jcx/DisplayObject', 'jcx'],function(DisplayObject, JCX){
 				},
 				configurable:false,
 				enumerable:true
-			}
+			},
+			renderer: {
+                value: null,
+                writable:true,
+                configurable:false,
+                enumerable:false
+            },
 		});
 
 		DisplayObject.call(this);

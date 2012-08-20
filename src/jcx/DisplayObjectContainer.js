@@ -197,5 +197,56 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         DisplayObject.prototype.notifyClick.call(this, evnt);
     };
 
+        //@override
+    DisplayObjectContainer.prototype.notifyMouseUp = function(evnt) {
+        var i, len;
+
+        //capture
+
+        //propagation
+        this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
+            var newEvent = new MouseEvent(MouseEvent.MOUSE_UP, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
+            newEvent.target = item;
+            item.notifyMouseUp(newEvent);
+        });
+
+        //bubble
+        DisplayObject.prototype.notifyMouseUp.call(this, evnt);
+    };
+
+        //@override
+    DisplayObjectContainer.prototype.notifyMouseDown = function(evnt) {
+        var i, len;
+
+        //capture
+
+        //propagation
+        this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
+            var newEvent = new MouseEvent(MouseEvent.MOUSE_DOWN, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
+            newEvent.target = item;
+            item.notifyMouseDown(newEvent);
+        });
+
+        //bubble
+        DisplayObject.prototype.notifyMouseDown.call(this, evnt);
+    };
+
+        //@override
+    DisplayObjectContainer.prototype.notifyMouseMove = function(evnt) {
+        var i, len;
+
+        //capture
+
+        //propagation
+        this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
+            var newEvent = new MouseEvent(MouseEvent.MOUSE_MOVE, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
+            newEvent.target = item;
+            item.notifyMouseMove(newEvent);
+        });
+
+        //bubble
+        DisplayObject.prototype.notifyMouseMove.call(this, evnt);
+    };
+
     return DisplayObjectContainer;
 });

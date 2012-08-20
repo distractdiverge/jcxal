@@ -19,6 +19,10 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         return (x >= this.stageX && x <= this.stageX+this.width) && (y >= this.stageY && y <= this.stageY+this.height);
     }
 
+    function dragObject(e){
+
+    }
+
     function inBoundsOfCircle(x,y){
         var a_squared = Math.pow(this.stageX - x, 2);
         var b_squared = Math.pow(this.stageY - y, 2);
@@ -78,6 +82,17 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         sprite2.name = "nesting sprite";
         sprite2.onclick = logSpriteClick;
 
+        sprite2.onmousedown = function(e){
+            e.target.startDrag();
+        };
+        sprite2.onmouseup = function(e){
+            e.target.stopDrag();
+        };
+        sprite2.onmousemove = function(e){
+            e.target.stageX = e.stageX - 10;
+            e.target.stageY = e.stageY - 10;
+        };
+
         var shape2 = new Shape();
         shape2.name = "yellow square";
         shape2.x = 0;
@@ -128,7 +143,7 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         shape5.height = 20;
         shape5.color = "#00FFFF";
         shape5.renderer = function(context){
-            context.drawCircle(this.stageX, this.stageY,10, "#333",this.color);
+            context.drawCircle(this.stageX, this.stageY,10, "#333", this.color);
         };
         shape5.isInBoundsTester = inBoundsOfCircle;
         shape5.onclick = logSpriteClick;
@@ -142,8 +157,15 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
 
         stage.addChild(sprite2);
 
-        stage.draw();
+        loop(stage);
 	}
+    
+    function loop(stage){
+        stage.draw();
+        window.setTimeout(function(){
+            loop(stage);
+        }, 1000/60);
+    }
 
     return init;
 });

@@ -9,12 +9,6 @@ define(['jcx/RenderableObject', 'jcx'], function(RenderableObject, JCX){
                 configurable:false,
                 enumerable:true
             },
-            renderer: {
-                value: null,
-                writable:true,
-                configurable:false,
-                enumerable:false
-            },
             isInBoundsTester: {
                 value:null,
                 writable:true,

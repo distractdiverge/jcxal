@@ -5,12 +5,6 @@ define(['jcx/RenderableObject', 'jcx'],function(RenderableObject, JCX){
         //need to do something about this - is duplicated in Shape
         var _jcx;
         Object.defineProperties(this,{
-            renderer:{
-                value: null,
-                writable:true,
-                configurable:false,
-                enumerable:false
-            },
             text:{
                 value:"",
                 writable:true,
