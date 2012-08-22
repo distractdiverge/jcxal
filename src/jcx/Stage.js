@@ -81,20 +81,24 @@ define(['jcx', 'jcx/DisplayObjectContainer', 'jcx/MouseEvent'], function(JCX, Di
         // setup click handler
         var that = this;
         canvas.onclick = function(e) {
-            that.notifyClick(new MouseEvent(MouseEvent.CLICK, false, false, e.x, e.y));
+            var mouseClickEvent = new MouseEvent(MouseEvent.CLICK, false, false, e.x, e.y);
+            mouseClickEvent.target = that;
+            that.notifyClick(mouseClickEvent);
         };
         canvas.onmousedown = function(e){
-            that.notifyMouseDown(new MouseEvent(MouseEvent.MOUSE_DOWN, false, false, e.x, e.y));
+            var mouseDownEvent = new MouseEvent(MouseEvent.MOUSE_DOWN, false, false, e.x, e.y);
+            mouseDownEvent.target = that;
+            that.notifyMouseDown(mouseDownEvent);
         };
         canvas.onmouseup = function(e){
-            that.notifyMouseUp(new MouseEvent(MouseEvent.MOUSE_UP, false, false, e.x, e.y));
+            var mouseUpEvent = new MouseEvent(MouseEvent.MOUSE_UP, false, false, e.x, e.y);
+            mouseUpEvent.target = that;
+            that.notifyMouseUp(mouseUpEvent);
         };
         canvas.onmousemove = function(e){
-            for (var c in that._children){
-                if(that._children[c].isBeingDragged){
-                    that._children[c].notifyMouseMove(new MouseEvent(MouseEvent.MOUSE_MOVE, false, false, e.x, e.y));
-                }
-            }
+            var mouseMoveEvent = new MouseEvent(MouseEvent.MOUSE_MOVE, false, false, e.x, e.y)
+            mouseMoveEvent.target = that;
+            that.notifyMouseMove(mouseMoveEvent);
         };
     }
     

@@ -1,13 +1,13 @@
 define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage, Sprite, Shape, StaticText){
-	function setupCanvasStyles(canvas, document) {
-		canvas.width = document.width;
-		canvas.height = document.height;
+    function setupCanvasStyles(canvas, document) {
+        canvas.width = document.width;
+        canvas.height = document.height;
 
-		canvas.style.width = canvas.width;
-		canvas.style.height = canvas.height;
-		canvas.style.backgroundColor = "#333333";
+        canvas.style.width = canvas.width;
+        canvas.style.height = canvas.height;
+        canvas.style.backgroundColor = "#333333";
         canvas.style.position = "relative";
-	}
+    }
 
     function logSpriteClick(e){
         var logString = e.target.name + " clicked: x "+ e.target.stageX +" y " + e.target.stageY + "\n";
@@ -51,6 +51,17 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         sprite.height = 100;
         sprite.name = "lonely sprite";
         sprite.onclick = logSpriteClick;
+        
+        sprite.onmousedown = function(e){
+            e.target.startDrag();
+        };
+        sprite.onmouseup = function(e){
+            e.target.stopDrag();
+        };
+        sprite.onmousemove = function(e){
+            e.target.stageX = e.stageX - 10;
+            e.target.stageY = e.stageY - 10;
+        };
 
         var shape1 = new Shape();
         shape1.name = "red square";
@@ -65,7 +76,7 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
 
         sprite.addChild(shape1);
         stage.addChild(sprite);
-
+        
         var staticText = new StaticText();
         staticText.x = 5;
         staticText.y = 20;
@@ -158,7 +169,7 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage
         stage.addChild(sprite2);
 
         loop(stage);
-	}
+    }
     
     function loop(stage){
         stage.draw();

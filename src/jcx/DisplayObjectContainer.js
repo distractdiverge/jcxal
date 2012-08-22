@@ -238,7 +238,9 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         //capture
 
         //propagation
-        this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
+        this._children.filter(function(item, index){
+            return item.isBeingDragged;
+        }).forEach(function(item, index){
             var newEvent = new MouseEvent(MouseEvent.MOUSE_MOVE, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
             newEvent.target = item;
             item.notifyMouseMove(newEvent);
