@@ -1,7 +1,7 @@
 define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'],function(Stage, Sprite, Shape, StaticText){
     function setupCanvasStyles(canvas, document) {
-        canvas.width = document.width;
-        canvas.height = document.height;
+        canvas.width = document.body.clientWidth;
+        canvas.height = document.body.clientHeight;
 
         canvas.style.width = canvas.width;
         canvas.style.height = canvas.height;
