@@ -187,6 +187,7 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         //capture
 
         //propagation
+        //TODO: convert this to classic for loop in order to figure out which item is "on top" visually, and thus, the clicked item
         this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
             var newEvent = new MouseEvent(MouseEvent.CLICK, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
             newEvent.target = item;
@@ -204,6 +205,7 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         //capture
 
         //propagation
+        //TODO: convert this to classic for loop in order to figure out which item is "on top" visually, and thus, the clicked item
         this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
             var newEvent = new MouseEvent(MouseEvent.MOUSE_UP, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
             newEvent.target = item;
@@ -221,6 +223,7 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         //capture
 
         //propagation
+        //TODO: convert this to classic for loop in order to figure out which item is "on top" visually, and thus, the clicked item
         this.getObjectsUnderPoint({x:evnt.stageX, y:evnt.stageY}).forEach(function(item, index){
             var newEvent = new MouseEvent(MouseEvent.MOUSE_DOWN, evnt.bubbles, evnt.cacelable, evnt.stageX, evnt.stageY);
             newEvent.target = item;
@@ -238,6 +241,7 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
         //capture
 
         //propagation
+        //TODO: need to figure out a better way to handle dragging
         this._children.filter(function(item, index){
             return item.isBeingDragged;
         }).forEach(function(item, index){
