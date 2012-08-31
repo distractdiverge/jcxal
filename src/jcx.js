@@ -1,70 +1,61 @@
-(function() {
+define(function() {
 
-	"use strict";
+    "use strict";
 
-	//
-	// using: http://dev.w3.org/html5/2dcontext/ specification for 2d context
-	//
-	
- 	//define([],function(){
+     // a wrapper for normal html5 canvas context
+     function JCX(context) {
 
- 		// a wrapper for normal html5 canvas context to allow relative coordinate space
- 		function JCX(context, x, y) {
+         Object.defineProperties(this,
+         {
+             _innerContext : {
+                 value: context,
+                 writable: false,
+                 configurable: false,
+                 enumerable: false
+             },
+         });
+     }
 
- 			var _x, _y;
+    JCX.prototype = {
+        drawRectangle: function(x, y, width, height, color, fillColor) {
+            if( fillColor ) {
+                this._innerContext.fillStyle = fillColor;
+                this._innerContext.fillRect(x, y, width, height);
+            }
 
- 			_x = x;
- 			_y = y;
+            this._innerContext.strokeStyle = color;
+            this._innerContext.strokeRect(x, y, width, height);
+        },
 
- 			Object.defineProperties(this,
- 			{
- 				_innerContext : {
- 					value: context,
- 					writable: false,
- 					configurable: false,
- 					enumerable: false
- 				},
- 				xOffset: {
- 					get: function() { return _x; },
- 					set: function(value) { _x = value; },
- 					configurable: false
- 				},
- 				yOffset: {
- 					get: function() { return _y; },
- 					set: function(value) { _y = value; },
- 					configurable: false
- 				}
- 			});
- 		}
+        drawSquare: function(x, y, size, color, fillColor) {
+            this.drawRectangle(x, y, size, size, color, fillColor);
+        },
+        drawCircle: function(x, y, radius, color, fillColor) {
+            
+            this._innerContext.beginPath();
+            if( fillColor ) {
+                this._innerContext.fillStyle = fillColor;
+                this._innerContext.arc(x, y, radius, 0, 360);
+                this._innerContext.fill();
+            }
 
- 		JCX.prototype = {
- 			drawRectangle: function(x, y, width, height, color, fillColor) {
- 				if( fillColor ) {
- 					this._innerContext.fillStyle = fillColor;
- 					this._innerContext.fillRect(this.xOffset+x, this.yOffset+y, width, height);
- 				} 
-
-				this._innerContext.strokeStyle = color;
- 				this._innerContext.strokeRect(this.xOffset+x, this.yOffset+y, width, height);
- 			},
-
- 			drawSquare: function(x, y, size, color, fillColor) {
-				this.drawRectangle(x, y, size, size, color, fillColor);
- 			},
-
- 			drawCircle: function(x, y, radius, color, fillColor) {
-				
- 				if( fillColor ) {
- 					this._innerContext.fillStyle = fillColor;
- 					this._innerContext.arc(this.xOffset+x, this.yOffset+y, radius, 0, 360);
- 					this._innerContext.fill();
- 				}
-
-				this._innerContext.strokeStyle = color;
- 				this._innerContext.stroke();
- 			}
-
- 		};
-
- 		window.JCX = JCX;
-})();
+            this._innerContext.strokeStyle = color;
+            this._innerContext.stroke();
+            this._innerContext.closePath();
+        },
+        drawText: function(x, y, text, color, fillColor){
+            //y is the bottom (baseline?) of the text by default
+            this._innerContext.font = "900 14px/2 Consolas";
+            if(fillColor){
+                this._innerContext.fillStyle = fillColor;
+                this._innerContext.fillText(text, x, y);
+            }
+            this._innerContext.strokeStyle = color;
+            this._innerContext.strokeText(text,x,y);
+        },
+        clearRect: function(x, y, width, height){
+            this._innerContext.clearRect(x,y,width,height);
+        }
+    };
+    return JCX;
+});

@@ -1,51 +1,36 @@
-(function(){
+define(['jcx/DisplayObjectContainer'], function(DisplayObjectContainer){
 
-	"use strict";
+    "use strict";
 
-	// using jcx
-	// using jcx/JCXEvent
+    function Sprite() {
+        this._isBeingTouchDragged = false;
+        this._isBeingDragged = false;
+        Object.defineProperties(this, {
+            isBeingDragged:{
+                get:function(){return this._isBeingDragged;},
+                configurable:false,
+                enumerable:false
+            }
+        });
+        DisplayObjectContainer.call(this);
+    }
 
-	function Sprite(context, x, y, renderer, isInBoundsTester) {
+    Sprite.prototype = new DisplayObjectContainer();
+    
+    Sprite.prototype.startDrag = function(lockCenter, bounds){
+        this._isBeingDragged = true;
+    };
 
-		if( typeof(renderer) !== "function" ) {
-			throw new Error("renderer must be a function");
-		}
+    Sprite.prototype.startTouchDrag = function(touchPointID, lockCenter, bounds){
+        this._isBeingTouchDragged= true;
+    };
 
-		if( typeof(isInBoundsTester) !== "function" ) {
-			throw new Error("isInBoundsTester must be a function");
-		}
+    Sprite.prototype.stopDrag = function(){
+        this._isBeingDragged = false;
+    };
 
-		Object.defineProperties(this,
-		{
-			_renderer : {
-				value: renderer,
-				writable: false,
-				configurable: false,
-				enumerable: false
-			},
-			_isInBoundsTester : {
-				value : isInBoundsTester,
-				writable: false,
-				configurable : false,
-				enumerable : false
-			}
-		});
-
-
-		DisplayObject.call(this, context, x, y);
-	}
-
-	Sprite.prototype = new DisplayObject(null, 0, 0);
-	
-	Sprite.prototype._isInBounds = function(x, y) {
-		return this._isInBoundsTester.call(this, x, y);
-	};
-
-	//@override
-	Sprite.prototype.draw = function() {
-		DisplayObject.prototype.draw.call(this);
-		this._renderer.call(this, this.jcx);
-	};
-	
-	window.Sprite = Sprite;
-}());
+    Sprite.prototype.stopTouchDrag = function(){
+        this._isBeingTouchDragged = false;
+    };
+    return Sprite;
+});
