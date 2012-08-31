@@ -81,21 +81,29 @@ define(['jcx', 'jcx/DisplayObjectContainer', 'jcx/MouseEvent'], function(JCX, Di
         // setup click handler
         var that = this;
         canvas.onclick = function(e) {
+            //TODO: this should function should first find the target via graph traversal,
+            //search for a cached path to it, and then execute the event path
             var mouseClickEvent = new MouseEvent(MouseEvent.CLICK, false, false, e.x, e.y);
             mouseClickEvent.target = that;
             that.notifyClick(mouseClickEvent);
         };
         canvas.onmousedown = function(e){
+            //TODO: this should function should first find the target via graph traversal,
+            //search for a cached path to it, and then execute the event path
             var mouseDownEvent = new MouseEvent(MouseEvent.MOUSE_DOWN, false, false, e.x, e.y);
             mouseDownEvent.target = that;
             that.notifyMouseDown(mouseDownEvent);
         };
         canvas.onmouseup = function(e){
+            //TODO: this should function should first find the target via graph traversal,
+            //search for a cached path to it, and then execute the event path
             var mouseUpEvent = new MouseEvent(MouseEvent.MOUSE_UP, false, false, e.x, e.y);
             mouseUpEvent.target = that;
             that.notifyMouseUp(mouseUpEvent);
         };
         canvas.onmousemove = function(e){
+            //TODO: this should function should first find the target via graph traversal,
+            //search for a cached path to it, and then execute the event path
             var mouseMoveEvent = new MouseEvent(MouseEvent.MOUSE_MOVE, false, false, e.x, e.y)
             mouseMoveEvent.target = that;
             that.notifyMouseMove(mouseMoveEvent);
