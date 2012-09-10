@@ -1,0 +1,1 @@
+Search.setIndex({objects:{},terms:{index:0,search:0,lightweight:0,welcom:0,interact:0,flash:0,jcxal:0,indic:0,content:0,framework:0,api:0,through:0,html5:0,tabl:0,canva:0,modul:0,document:0,page:0,like:0},objtypes:{},titles:["Welcome to jcxal&#8217;s documentation!"],objnames:{},filenames:["index"]})
