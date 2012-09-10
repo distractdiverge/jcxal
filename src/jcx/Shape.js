@@ -1,33 +1,41 @@
-define(['jcx/RenderableObject', 'jcx'], function(RenderableObject, JCX){
+/*jslint nomen: true*/
+/*global define*/
 
-    function Shape(){
+define(['jcx/RenderableObject', 'jcx'], function (RenderableObject, JCX) {
+
+    "use strict";
+
+    function Shape() {
         var _jcx;
-        Object.defineProperties(this,{
+
+        Object.defineProperties(this, {
             color : {
-                value:"#000",
-                writable:true,
-                configurable:false,
-                enumerable:true
+                value: "#000", // TODO: Convert color to use rgba
+                writable: true,
+                configurable: false,
+                enumerable: true
             },
             isInBoundsTester: {
-                value:null,
-                writable:true,
-                configurable:false,
-                enumerable:false
+                value: null,
+                writable: true,
+                configurable: false,
+                enumerable: false
             }
         });
+
         RenderableObject.call(this);
     }
-    
+
     Shape.prototype = new RenderableObject();
+
     //@override
-    Shape.prototype.draw = function(){
+    Shape.prototype.draw = function () {
         this.renderer(this.jcx);
         RenderableObject.prototype.draw.call(this);
     };
 
     //@override
-    Shape.prototype._isInBounds = function(x, y){
+    Shape.prototype._isInBounds = function (x, y) {
         return this.isInBoundsTester(x, y);
     };
     return Shape;
