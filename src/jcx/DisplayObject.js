@@ -1,4 +1,7 @@
-define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, MouseEvent){
+/*jslint nomen:true*/
+/*global define*/
+
+define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function (EventDispatcher, MouseEvent) {
 
     "use strict";
 
@@ -7,11 +10,10 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
             _scaleX, _scaleY,
             _stage, _rotation,
             _visible, _stageX,
-            _stageY, _context;
-
-        var _onclick, _onmousedown,
+            _stageY, _context,
+            _onclick, _onmousedown,
             _onmouseup, _onmousemove,
-            _ondoubleclick;
+            _ondoubleclick, _stageLocked;
 
         _x = 0;
         _y = 0;
@@ -19,10 +21,9 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
         _scaleY = 1;
         _rotation = 0;
 
-        var _stageLocked = false;
+        _stageLocked = false;
 
-        Object.defineProperties(this,
-        {
+        Object.defineProperties(this, {
             cacheAsBitmap: {
                 value: false,
                 writable: true,
@@ -36,17 +37,17 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 enumerable: true
             },
             context: {
-                get: function(){
-                    if (!_context){
+                get: function () {
+                    if (!_context) {
                         _context = this.parentContainer.context;
                     }
                     return _context;
                 },
-                set: function(value){
+                set: function (value) {
                     _context = value;
                 },
-                configurable:false,
-                enumerable:false
+                configurable: false,
+                enumerable: false
             },
             height: {
                 value: null,
@@ -73,52 +74,52 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 enumerable: true
             },
             stageX: {
-                get: function(){
+                get: function () {
                     return this.x + this.parentContainer.stageX;
                 },
-                set: function(value){
-                     this.x = value - this.parentContainer.stageX;
+                set: function (value) {
+                    this.x = value - this.parentContainer.stageX;
                 },
-                configurable:true,
-                enumerable:true
+                configurable: true,
+                enumerable: true
             },
             stageY: {
-                get: function(){
+                get: function () {
                     return this.y + this.parentContainer.stageY;
                 },
-                set: function(value){
+                set: function (value) {
                     this.y = value - this.parentContainer.stageY;
                 },
-                configurable:true,
-                enumerable:true
+                configurable: true,
+                enumerable: true
             },
             rotation: {
-                set: function(value) {
+                set: function (value) {
                     _rotation = value;
                 },
                 configurable: false,
                 enumerable: true
             },
             scaleX: {
-                get: function() { return _scaleX; },
-                set: function(value) {
+                get: function () { return _scaleX; },
+                set: function (value) {
                     _scaleX = value;
                 },
                 configurable: false,
                 enumerable: true
             },
             scaleY: {
-                get: function() { return _scaleY; },
-                set: function(value){
+                get: function () { return _scaleY; },
+                set: function (value) {
                     _scaleY = value;
                 },
                 configurable: false,
                 enumerable: true
             },
             stage: {
-                get: function() { return _stage; },
-                set: function(value){
-                    if(!_stageLocked){
+                get: function () { return _stage; },
+                set: function (value) {
+                    if (!_stageLocked) {
                         _stage = value;
                     }
                     _stageLocked = true;
@@ -127,8 +128,8 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
                 enumerable: false
             },
             visible: {
-                get: function() { return _visible; },
-                set: function(value){
+                get: function () { return _visible; },
+                set: function (value) {
                     _visible = value;
                 },
                 configurable: false,
@@ -136,66 +137,66 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
             },
             width: {
                 value: null,
-                writable:true,
+                writable: true,
                 configurable: false,
                 enumerable: true
             },
             x: {
-                get: function() { return _x; },
-                set: function(value) {
+                get: function () { return _x; },
+                set: function (value) {
                     _x = value;
                 },
                 configurable: false,
                 enumerable: true
             },
             y: {
-                get: function() { return _y; },
-                set: function(value) {
+                get: function () { return _y; },
+                set: function (value) {
                     _y = value;
                 },
                 configurable: false,
                 enumerable: true
             },
             onclick: {
-                get: function(){ return _onclick; },
-                set: function(value){
+                get: function () { return _onclick; },
+                set: function (value) {
                     this.removeEventListener(MouseEvent.CLICK);
-                    _onclick=value;
+                    _onclick = value;
                     this.addEventListener(MouseEvent.CLICK, _onclick);
                 },
-                configurable:false,
-                enumerable:false
+                configurable: false,
+                enumerable: false
             },
             onmousedown: {
-                get: function(){ return _onmousedown; },
-                set: function(value){
+                get: function () { return _onmousedown; },
+                set: function (value) {
                     this.removeEventListener(MouseEvent.MOUSE_DOWN);
-                    _onmousedown=value;
+                    _onmousedown = value;
                     this.addEventListener(MouseEvent.MOUSE_DOWN, _onmousedown);
                 },
-                configurable:false,
-                enumerable:false
+                configurable: false,
+                enumerable: false
             },
             onmouseup: {
-                get: function(){ return _onmouseup; },
-                set: function(value){
+                get: function () { return _onmouseup; },
+                set: function (value) {
                     this.removeEventListener(MouseEvent.MOUSE_UP);
-                    _onmouseup=value;
+                    _onmouseup = value;
                     this.addEventListener(MouseEvent.MOUSE_UP, _onmouseup);
                 },
-                configurable:false,
-                enumerable:false
+                configurable: false,
+                enumerable: false
             },
             onmousemove: {
-                get: function(){ return _onmousemove; },
-                set: function(value){
+                get: function () { return _onmousemove; },
+                set: function (value) {
                     this.removeEventListener(MouseEvent.MOUSE_MOVE);
-                    _onmousemove=value;
+                    _onmousemove = value;
                     this.addEventListener(MouseEvent.MOUSE_MOVE, _onmousemove);
                 },
-                configurable:false,
-                enumerable:false
-            },
+                configurable: false,
+                enumerable: false
+            }
         });
 
         EventDispatcher.call(this);
@@ -207,56 +208,56 @@ define(['jcx/EventDispatcher', 'jcx/MouseEvent'], function(EventDispatcher, Mous
     Object.defineProperties(DisplayObject.prototype, {
         parentContainer: {
             value: null,
-            writable:false,
-            configurable:false,
-            enumerable:false
-        },
+            writable: false,
+            configurable: false,
+            enumerable: false
+        }
     });
 
-    DisplayObject.prototype._isInBounds = function(x, y) {
+    DisplayObject.prototype._isInBounds = function (x, y) {
         return (x >= this.stageX && x <= this.stageX + this.width && y >= this.stageY && y <= this.stageY + this.height);
     };
-    DisplayObject.prototype.draw = function() {
+    DisplayObject.prototype.draw = function () {
         // perform drawing logic
     };
-    DisplayObject.prototype.notifyClick = function(e) {
-        if( this.hitTestPoint(e.stageX, e.stageY) ) {
+    DisplayObject.prototype.notifyClick = function (e) {
+        if (this.hitTestPoint(e.stageX, e.stageY)) {
             this.dispatchEvent(new MouseEvent(MouseEvent.CLICK, null, null, e.stageX, e.stageY));
         }
     };
-    DisplayObject.prototype.notifyMouseDown = function(e) {
-        if( this.hitTestPoint(e.stageX, e.stageY) ) {
+    DisplayObject.prototype.notifyMouseDown = function (e) {
+        if (this.hitTestPoint(e.stageX, e.stageY)) {
             this.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_DOWN, null, null, e.stageX, e.stageY));
         }
     };
-    DisplayObject.prototype.notifyMouseUp = function(e) {
-        if( this.hitTestPoint(e.stageX, e.stageY) ) {
+    DisplayObject.prototype.notifyMouseUp = function (e) {
+        if (this.hitTestPoint(e.stageX, e.stageY)) {
             this.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_UP, null, null, e.stageX, e.stageY));
         }
     };
-    DisplayObject.prototype.notifyMouseMove = function(e) {
-        if( this.isBeingDragged ) {
+    DisplayObject.prototype.notifyMouseMove = function (e) {
+        if (this.isBeingDragged) {
             this.dispatchEvent(new MouseEvent(MouseEvent.MOUSE_MOVE, null, null, e.stageX, e.stageY));
         }
     };
     //PUBLIC METHODS
     //the 'targetCoordinateSpace' parameter should be a DispayObjectContainer
-    DisplayObject.prototype.getBounds = function(targetCoordinateSpace){
-
+    DisplayObject.prototype.getBounds = function (targetCoordinateSpace) {
+        // Do Nothing
     };
     //the 'targetCoordinateSpace' parameter should be a DisplayObjectContainer
-    DisplayObject.prototype.getRect = function(targetCoordinateSpace){
-        
+    DisplayObject.prototype.getRect = function (targetCoordinateSpace) {
+        // Do Nothing  
     };
-    DisplayObject.prototype.globalToLocal = function(point){
-        
+    DisplayObject.prototype.globalToLocal = function (point) {
+        // Do Nothing
     };
     //the 'shapeFlag' argument defaults to false and determines whether to check pixels (true) or just the bounding box (false)
-    DisplayObject.prototype.hitTestPoint = function(x, y, shapeFlag){
+    DisplayObject.prototype.hitTestPoint = function (x, y, shapeFlag) {
         return this._isInBounds(x, y);
     };
-    DisplayObject.prototype.localToGlobal = function(point){
-        
+    DisplayObject.prototype.localToGlobal = function (point) {
+        // Do Nothing
     };
     return DisplayObject;
 });
