@@ -1,3 +1,5 @@
+/*global require*/
+
 require.config({
 });
 
