@@ -1,101 +1,126 @@
-define(["jcx/JCXEvent"],function(JCXEvent){
+/*global define*/
+
+define(["jcx/JCXEvent"], function (JCXEvent) {
+
     "use strict";
 
-    function MouseEvent(type, bubbles, cancelable, stageX, stageY, relatedObject, ctrlKey, altKey, shiftKey, buttonDown, delta, commandKey, controlKey, clickCount){
-        Object.defineProperties(this,
-        {
-            altKey:{
-                value:altKey,
-                writable:true,
-                configurable:false,
-                enumerable:false
+    function MouseEvent(type, bubbles, cancelable, stageX, stageY, relatedObject, ctrlKey, altKey, shiftKey, buttonDown, delta, commandKey, controlKey, clickCount) {
+
+        Object.defineProperties(this, {
+
+            altKey: {
+                value: altKey,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            buttonDown:{
-                value:buttonDown,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            buttonDown: {
+                value: buttonDown,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            clickCount:{
-                value:clickCount,
-                writable:false,
-                configurable:false,
-                enumerable:false
+
+            clickCount: {
+                value: clickCount,
+                writable: false,
+                configurable: false,
+                enumerable: false
             },
-            commandKey:{
-                value:commandKey,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            commandKey: {
+                value: commandKey,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            controlKey:{
-                value:controlKey,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            controlKey: {
+                value: controlKey,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            ctrlKey:{
-                value:ctrlKey,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            ctrlKey: {
+                value: ctrlKey,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            delta:{
-                value:delta,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            delta: {
+                value: delta,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            localX:{
-                value:null,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            localX: {
+                value: null,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            localY:{
-                value:null,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            localY: {
+                value: null,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            relatedObject:{
-                value:relatedObject,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            relatedObject: {
+                value: relatedObject,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            shiftKey:{
-                value:shiftKey,
-                writable:true,
-                configurable:false,
-                enumerable:false
+
+            shiftKey: {
+                value: shiftKey,
+                writable: true,
+                configurable: false,
+                enumerable: false
             },
-            stageX:{
-                value:stageX,
-                writable:false,
-                configurable:false,
-                enumerable:false
+
+            stageX: {
+                value: stageX,
+                writable: false,
+                configurable: false,
+                enumerable: false
             },
-            stageY:{
-                value:stageY,
-                writable:false,
-                configurable:false,
-                enumerable:false
+
+            stageY: {
+                value: stageY,
+                writable: false,
+                configurable: false,
+                enumerable: false
             }
-            
         });
+
         JCXEvent.call(this, type, bubbles, cancelable);
     }
 
     MouseEvent.prototype = new JCXEvent(null);
 
     //@override
-    MouseEvent.prototype.clone = function(){ };
-    //@override
-    MouseEvent.prototype.toString = function(){ };
-    //@override
-    MouseEvent.prototype.updateAfterEvent = function(){ };
+    MouseEvent.prototype.clone = function () {
+        // TODO: Implement Method
+    };
 
+    //@override
+    MouseEvent.prototype.toString = function () {
+        // TODO: Implement Method
+    };
+
+    //@override
+    MouseEvent.prototype.updateAfterEvent = function () {
+        // TODO: Implement Method
+    };
+
+    // Define Event Types
     MouseEvent.CLICK = "click";
     MouseEvent.CONTEXT_MENU = "contextMenu";
     MouseEvent.DOUBLE_CLICK = "doubleClick";
