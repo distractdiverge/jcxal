@@ -1,26 +1,32 @@
-define(function(){
-    
+/*jslint nomen:true*/
+/*global define*/
+
+define(["jcx/EventPhase"], function (EventPhase) {
+
     "use strict";
 
     function JCXEvent(type, bubbles, cancelable) {
-        if(bubbles === null || bubbles === undefined){
+        var _target, _isTargetLocked;
+
+        if (bubbles === null || bubbles === undefined) {
             bubbles = false;
         }
-        if(cancelable === null || cancelable === undefined){
+
+        if (cancelable === null || cancelable === undefined) {
             cancelable = false;
         }
-        var _targetLocked = false;
-        var _target;
 
-        Object.defineProperties(this,
-        {
+        _isTargetLocked = false;
+
+        Object.defineProperties(this, {
+
             bubbles: {
-                value:bubbles,
-                writable:false,
-                configurable:false,
-                enumerable:false
+                value: bubbles,
+                writable: false,
+                configurable: false,
+                enumerable: false
             },
-            cancelable:{
+            cancelable: {
                 value: cancelable,
                 writable: false,
                 configurable: false,
@@ -33,17 +39,17 @@ define(function(){
                 enumerable: false
             },
             eventPhase: {
-                value: 0,
-                writable:false,
+                value: EventPhase.NONE,
+                writable: false,
                 configurable: false,
-                enumerable:false
+                enumerable: false
             },
             target: {
-                get: function(){ return _target; },
-                set: function(value){
-                    if(_target!==null && !_targetLocked){
+                get: function () { return _target; },
+                set: function (value) {
+                    if (_target !== null && !_isTargetLocked) {
                         _target = value;
-                        _targetLocked = true;
+                        _isTargetLocked = true;
                     }
                 },
                 configurable: false,
@@ -51,13 +57,14 @@ define(function(){
             },
             type: {
                 value: type,
-                writable:false,
+                writable: false,
                 configurable: false,
                 enumerable: false
             }
         });
     }
 
+    // Define Standard Event Types
     JCXEvent.ACTIVATE = "activate";
     JCXEvent.ADDED = "added";
     JCXEvent.ADDED_TO_STAGE = "addedToStage";
