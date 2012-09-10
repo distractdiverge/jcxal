@@ -1,27 +1,31 @@
-define(['jcx/DisplayObject', 'jcx'],function(DisplayObject, JCX){
-	
+/*jslint nomen: true*/
+/*global define*/
+
+define(['jcx/DisplayObject', 'jcx'], function (DisplayObject, JCX) {
+
 	"use strict";
 
-	function RenderableObject(){
+	function RenderableObject() {
 		var _jcx;
-		Object.defineProperties(this,
-		{
-			jcx:{
-				get: function(){
-					if(_jcx == null || _jcx == undefined){
+
+		Object.defineProperties(this, {
+
+			jcx: {
+				get: function () {
+					if (_jcx === null || _jcx === undefined) {
 						_jcx = new JCX(this.context);
 					}
 					return _jcx;
 				},
-				configurable:false,
-				enumerable:true
+				configurable: false,
+				enumerable: true
 			},
 			renderer: {
                 value: null,
-                writable:true,
-                configurable:false,
-                enumerable:false
-            },
+                writable: true,
+                configurable: false,
+                enumerable: false
+            }
 		});
 
 		DisplayObject.call(this);
