@@ -1,7 +1,7 @@
 /*jslint nomen:true*/
 /*global define*/
 
-define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], function (DisplayObject, InteractiveObject, MouseEvent, JCX) {
+define(['jcx/DisplayObject', 'jcx/MouseEvent', 'jcx'], function (DisplayObject, MouseEvent, JCX) {
 
     "use strict";
 
@@ -44,10 +44,10 @@ define(['jcx/DisplayObject', 'jcx/InteractiveObject', 'jcx/MouseEvent', 'jcx'], 
             }
         });
 
-        InteractiveObject.call(this);
+        DisplayObject.call(this);
     }
 
-    DisplayObjectContainer.prototype = new InteractiveObject();
+    DisplayObjectContainer.prototype = new DisplayObject();
 
     DisplayObjectContainer.prototype.checkIsAncestor = function (item) {
         var currentDisplayObject = this;
