@@ -5,7 +5,17 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'], function (Sta
 
     "use strict";
 
-    function setupCanvasStyles(canvas, document) {
+    var setupCanvasStyles,
+        logSpriteClick,
+        inBoundsOfRect,
+        dragObject,
+        inBoundsOfCircle,
+        renderSquare,
+        renderText,
+        loop,
+        init;
+
+    setupCanvasStyles = function (canvas, document) {
         canvas.width = document.body.clientWidth;
         canvas.height = document.body.clientHeight;
 
@@ -13,23 +23,23 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'], function (Sta
         canvas.style.height = canvas.height;
         canvas.style.backgroundColor = "#333333";
         canvas.style.position = "relative";
-    }
+    };
 
-    function logSpriteClick(e) {
+    logSpriteClick = function (e) {
         var logString = e.target.name + " clicked: x " + e.target.stageX + " y " + e.target.stageY + "\n";
         logString += "mouse location: x " + e.stageX + " y " + e.stageY;
         console.log(logString);
-    }
+    };
 
-    function inBoundsOfRect(x, y) {
+    inBoundsOfRect = function (x, y) {
         return (x >= this.stageX && x <= this.stageX + this.width) && (y >= this.stageY && y <= this.stageY + this.height);
-    }
+    };
 
-    function dragObject(e) {
+    dragObject = function (e) {
         // TODO: Implement Method
-    }
+    };
 
-    function inBoundsOfCircle(x, y) {
+    inBoundsOfCircle = function (x, y) {
         var a_squared, b_squared, c_squared;
 
         a_squared = Math.pow(this.stageX - x, 2);
@@ -37,22 +47,24 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'], function (Sta
         c_squared = a_squared + b_squared;
 
         return c_squared < 100;
-    }
-    function renderSquare(context) {
-        context.drawSquare(this.stageX, this.stageY, this.width, "#333", this.color);
-    }
-    function renderText(context) {
-        context.drawText(this.stageX, this.stageY, this.text, "#333", this.color);
-    }
+    };
 
-    function loop(stage) {
+    renderSquare = function (context) {
+        context.drawSquare(this.stageX, this.stageY, this.width, "#333", this.color);
+    };
+
+    renderText = function (context) {
+        context.drawText(this.stageX, this.stageY, this.text, "#333", this.color);
+    };
+
+    loop = function (stage) {
         stage.draw();
         window.setTimeout(function () {
             loop(stage);
         }, 1000 / 60);
-    }
+    };
 
-    function init() {
+    init = function () {
         var canvas, context, stage, sprite, shape1, staticText, sprite2, shape2, shape3, shape4, shape5, sprite3;
 
         canvas = document.getElementById("theCanvas");
@@ -185,7 +197,7 @@ define(['jcx/Stage', 'jcx/sprite', 'jcx/Shape', 'jcx/StaticText'], function (Sta
         stage.addChild(sprite2);
 
         loop(stage);
-    }
+    };
 
     return init;
 });
